@@ -45,6 +45,7 @@ public class SwerveModule {
         configDriveMotor();
 
         lastAngle = getState().angle;
+        angleEncoder.configMagnetOffset(-angleOffset.getDegrees());
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
@@ -99,10 +100,10 @@ public class SwerveModule {
         }
     }
 
-    private void resetToAbsolute(){
-        waitForCanCoder();
+    public void resetToAbsolute(boolean wait) {
+        if (wait) waitForCanCoder();
         
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        double absolutePosition = Conversions.degreesToFalcon(angleOffset.getDegrees() - getCanCoder().getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
@@ -116,7 +117,7 @@ public class SwerveModule {
         mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
-        resetToAbsolute();
+        resetToAbsolute(true);
     }
 
     private void configDriveMotor(){        
