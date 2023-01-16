@@ -28,6 +28,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, 3); // B
+    private final JoystickButton zeroCumulativeGyros = new JoystickButton(driver, 2); // A
     private final JoystickButton robotCentric = new JoystickButton(driver, 5); // Left bumper
 
     /* Subsystems */
@@ -46,6 +47,7 @@ public class RobotContainer {
             )
         );
 
+    
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -61,6 +63,10 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     }
 
+    public void configureMoreButtonBindings(int num) {
+        zeroCumulativeGyros.onTrue(new InstantCommand(() -> s_Swerve.resetCumulativeModules(num)));
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -69,5 +75,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new exampleAuto(s_Swerve);
+    }
+
+    public Swerve getSwerve() {
+        return s_Swerve;
     }
 }
