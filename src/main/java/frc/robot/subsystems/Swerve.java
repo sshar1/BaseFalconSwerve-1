@@ -105,7 +105,12 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetModule(int index) {
+        if(index < 0) {
+            System.out.println("\n\n\n\n\n\nDID NOT ZERO\n\n\n\n\n");
+            return;
+        }
         mSwerveMods[index].resetToAbsolute(false);
+        System.out.println("\n\n\n\n\nZeroed Module " + index + "\n\n\n\n\n");
     }
 
     public void resetCumulativeModules(int num) {

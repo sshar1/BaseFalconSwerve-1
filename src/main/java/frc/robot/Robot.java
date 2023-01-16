@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -35,15 +36,19 @@ public class Robot extends TimedRobot {
     moduleChooser = new SendableChooser<>();
     moduleCumulativeChooser = new SendableChooser<>();
 
+    moduleChooser.setDefaultOption("None", -1);
     moduleChooser.addOption("Module 0", 0);
     moduleChooser.addOption("Module 1", 1);
     moduleChooser.addOption("Module 2",2);
     moduleChooser.addOption("Module 3",3);
 
-    moduleCumulativeChooser.addOption("1 Module", 1);
+    moduleCumulativeChooser.setDefaultOption("1 Module", 1);
     moduleCumulativeChooser.addOption("2 Modules", 2);
     moduleCumulativeChooser.addOption("3 Modules", 3);
     moduleCumulativeChooser.addOption("4 Modules", 4);
+
+    SmartDashboard.putData(moduleChooser);
+    SmartDashboard.putData(moduleCumulativeChooser);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -92,13 +97,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     m_robotContainer.getSwerve().resetModule(moduleChooser.getSelected());
-    m_robotContainer.getSwerve().resetCumulativeModules(moduleCumulativeChooser.getSelected());
+    m_robotContainer.configureMoreButtonBindings(moduleCumulativeChooser.getSelected());
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_robotContainer.getSwerve().resetModule(moduleChooser.getSelected());
-    m_robotContainer.getSwerve().resetCumulativeModules(moduleCumulativeChooser.getSelected());
+   
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

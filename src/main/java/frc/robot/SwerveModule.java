@@ -106,6 +106,7 @@ public class SwerveModule {
         if (wait) waitForCanCoder();
         
         double absolutePosition = Conversions.degreesToFalcon(angleOffset.getDegrees() - getCanCoder().getDegrees(), Constants.Swerve.angleGearRatio);
+        System.out.println(absolutePosition);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
