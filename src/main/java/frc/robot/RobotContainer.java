@@ -28,6 +28,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, 3); // B
+    private final JoystickButton zeroCumulativeGyros = new JoystickButton(driver, 2); // A
     private final JoystickButton robotCentric = new JoystickButton(driver, 5); // Left bumper
     private final JoystickButton zeroCumulativeGyros = new JoystickButton(driver, 2); // A
 
@@ -47,6 +48,7 @@ public class RobotContainer {
             )
         );
 
+    
         // Configure the button bindings
         configureButtonBindings();
     }

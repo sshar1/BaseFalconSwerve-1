@@ -113,7 +113,6 @@ public class Swerve extends SubsystemBase {
             resetModule(i);
         }
     }
-    
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
